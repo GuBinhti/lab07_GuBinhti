@@ -10,13 +10,13 @@ void Heap::bubbleUp(int index){
   while (index > 0){
     int parentIndex = (index - 1) / 2;
   
-    if (vdata[index] >= vdata[parentIndex]){
+    if (vdata.at(index) >= vdata.at(parentIndex)){
       return;
     }
     else{
-      int temp = vdata[index];
-      vdata[index] = vdata[parentIndex];
-      vdata[parentIndex] = temp;
+      int temp = vdata.at(index);
+      vdata.at(index) = vdata.at(parentIndex);
+      vdata.at(parentIndex) = temp;
       index = parentIndex;
     }
   }
@@ -25,26 +25,24 @@ void Heap::bubbleUp(int index){
 }
 void Heap::bubbleDown(int index){
   int childIndex = 2 * index + 1;
-  int value = vdata[index];
+  int value = vdata.at(index);
   while (childIndex < vdata.size()){
-    int max = value;
-    int maxIndex = -1;
-    int i = 0;
-    while (i < 2 && i + childIndex < vdata.size()) {
-      if (vdata[i + childIndex]> max){
-        max = vdata[i + childIndex];
-        maxIndex = i + childIndex;
+    int min = value;
+    int minIndex = -1;
+    for (int i = 0; (i < 2) && (i + childIndex < vdata.size()); i++){
+      if (vdata.at(i + childIndex)< min){
+        min = vdata.at(i + childIndex);
+        minIndex = i + childIndex;
       }
-      ++i;
       }
-      if (max == value){
+      if (min == value){
         return;
       }
       else{
-        int temp = vdata[index];
-        vdata[index] = vdata[maxIndex];
-        vdata[maxIndex] = temp;
-        index = maxIndex;
+        int temp = vdata.at(index);
+        vdata.at(index) = vdata.at(minIndex);
+        vdata.at(minIndex) = temp;
+        index = minIndex;
         childIndex= 2 * index + 1;
       }
       
@@ -78,7 +76,7 @@ void Heap::pop(){
     return;
   }
   else if (vdata.size() == 1){
-    vdata.erase(vdata.begin());
+    vdata.pop_back();
   }
   else{
     int Val = vdata[vdata.size() - 1];
