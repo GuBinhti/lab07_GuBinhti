@@ -5,49 +5,52 @@
 #include <iostream>
 using std::cout;
 //helper FUNCTIONS
-void Heap::up(int value){
-  while(value > 0){
-    int temp = (value - 1)/2;
-    if(vdata[value] >= vdata[temp]){
+
+void Heap::bubbleUp(int index){ 
+  while (index > 0){
+    int parentIndex = (index - 1) / 2;
+  
+    if (vdata[index] >= vdata[parentIndex]){
       return;
     }
     else{
-      int temp = vdata[value];
-      vdata[value] = vdata[temp];
-      vdata[temp] = temp;
-      value = temp;
+      int temp = vdata[index];
+      vdata[index] = vdata[parentIndex];
+      vdata[parentIndex] = temp;
+      index = parentIndex;
     }
   }
+
 
 }
-void Heap::down(int value){
-  int newValue = 2 * value + 1;
-  int num = vdata[value];
-  while(newValue < vdata.size()){
-    int MIN = num;
-    int ind = -1;
+void Heap::bubbleDown(int index){
+  int childIndex = 2 * index + 1;
+  int value = vdata[index];
+  while (childIndex < vdata.size()){
+    int max = value;
+    int maxIndex = -1;
     int i = 0;
-    while (i < 2 && i + newValue < vdata.size()) {
-      if (vdata[i + newValue] < MIN){
-        MIN = vdata[i + newValue];
-        ind = i + newValue;
+    while (i < 2 && i + childIndex < vdata.size()) {
+      if (vdata[i + childIndex]> max){
+        max = vdata[i + childIndex];
+        maxIndex = i + childIndex;
       }
-      i++;
-    }
-    if(MIN == num){
-      return;
-    }
-    else{
-      int temp = vdata[value];
-      vdata[value] = vdata[ind];
-      vdata[ind] = temp;
-      value = ind;
-      newValue = 2 * value + 1;
-    }
-  }
-  }
+      ++i;
+      }
+      if (max == value){
+        return;
+      }
+      else{
+        int temp = vdata[index];
+        vdata[index] = vdata[maxIndex];
+        vdata[maxIndex] = temp;
+        index = maxIndex;
+        childIndex= 2 * index + 1;
+      }
+      
+      }
 
-
+}
 
 
 
@@ -60,7 +63,7 @@ void Heap::down(int value){
 // the heap is correctly arranged
 void Heap::push(int value){
   vdata.push_back(value);
-  up(vdata.size()-1);
+  bubbleUp(vdata.size()-1);
 
 
 
@@ -81,7 +84,7 @@ void Heap::pop(){
     int Val = vdata[vdata.size() - 1];
     vdata[0] = Val;
     vdata.pop_back();
-    down(0);
+    bubbleDown(0);
   }
 
 }
