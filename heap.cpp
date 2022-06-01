@@ -22,9 +22,9 @@ void Heap::up(int value){
 }
 void Heap::down(int value){
   int newValue = 2 * value + 1;
-  int value = vdata[value];
+  int num = vdata[value];
   while(newValue < vdata.size()){
-    int MIN = value;
+    int MIN = num;
     int ind = -1;
     int i = 0;
     while (i < 2 && i + newValue < vdata.size()) {
@@ -34,7 +34,7 @@ void Heap::down(int value){
       }
       i++;
     }
-    if(MIN == value){
+    if(MIN == num){
       return;
     }
     else{

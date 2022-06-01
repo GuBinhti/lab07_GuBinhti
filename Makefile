@@ -1,9 +1,9 @@
-all: runtests
+all: examheap
 
-default: runtests
+default: examheap
 
-runtests: heap.o examheap.o
-	g++ -std=c++11 -g heap.o examheap.o -o runtests
+examheap: heap.o examheap.o
+	g++ -std=c++11 -g heap.o examheap.o -o examheap
 
 clean:
-	/bim/rm -f runtests *.o
+	/bim/rm -f examheap *.o
